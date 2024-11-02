@@ -1,4 +1,3 @@
-// src/components/home/Services.js
 import React from 'react';
 import styled from '@emotion/styled';
 import { motion, useAnimation } from 'framer-motion';
@@ -176,6 +175,54 @@ const services = [
       'Computer Vision',
       'Predictive Analytics'
     ]
+  },
+  {
+    title: 'MATLAB Solutions',
+    gradient: 'linear-gradient(135deg, #ff6b00 0%, #ff9500 100%)',
+    color: '#ff6b00',
+    icon: '📊',
+    features: [
+      'Signal Processing',
+      'Data Analysis & Visualization',
+      'Numerical Computing',
+      'Simulation Models'
+    ]
+  },
+  {
+    title: 'Circuit Design',
+    gradient: 'linear-gradient(135deg, #00ff88 0%, #00cc99 100%)',
+    color: '#00ff88',
+    icon: '⚡',
+    features: [
+      'KiCad PCB Design',
+      'Proteus Simulation',
+      'Component Selection',
+      'Circuit Testing & Validation'
+    ]
+  },
+  {
+    title: 'Engineering Design',
+    gradient: 'linear-gradient(135deg, #3366ff 0%, #00ccff 100%)',
+    color: '#3366ff',
+    icon: '📐',
+    features: [
+      'Autodesk Inventor 3D Modeling',
+      'Technical Documentation',
+      'Assembly Design',
+      'Design Optimization'
+    ]
+  },
+  {
+    title: 'Microcontroller Programming',
+    gradient: 'linear-gradient(135deg, #ff3366 0%, #ff6699 100%)',
+    color: '#ff3366',
+    icon: '🎯',
+    features: [
+      'Arduino Development',
+      'STM32 Programming',
+      'Embedded Systems',
+      'IoT Solutions'
+    ]
   }
 ];
 
@@ -192,7 +239,6 @@ const Services = () => {
     }
   }, [controls, inView]);
 
-  // Mouse move effect for cards
   const handleMouseMove = (e, card) => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;

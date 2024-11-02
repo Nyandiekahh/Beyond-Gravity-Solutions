@@ -1,9 +1,9 @@
-// components/contact/Contact.js
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, CheckCircle } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
 
 const ContactSection = styled.section`
   min-height: 100vh;
@@ -108,6 +108,11 @@ const SubmitButton = styled(motion.button)`
   &:hover::before {
     transform: translate(-50%, -50%) scale(1);
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `;
 
 const ContactInfo = styled(motion.div)`
@@ -194,38 +199,43 @@ const SuccessMessage = styled(motion.div)`
   padding: 1rem 2rem;
   border-radius: 10px;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 255, 157, 0.2);
+`;
+
+const SuccessIcon = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ErrorText = styled(motion.span)`
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: block;
 `;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [state, handleSubmit, reset] = useForm("xkgnjqqq");
   const [ref, inView] = useInView({
     threshold: 0.2,
     triggerOnce: true
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
-  };
+  const formRef = useRef(null);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleWhatsAppClick = () => {
-    window.location.href = 'https://wa.me/254719408098';
-  };
+  useEffect(() => {
+    if (state.succeeded) {
+      formRef.current?.reset();
+      const timer = setTimeout(() => {
+        reset();
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [state.succeeded, reset]);
 
   const containerVariants = {
     hidden: {},
@@ -248,6 +258,49 @@ const Contact = () => {
         duration: 0.6
       }
     }
+  };
+
+  const successVariants = {
+    initial: { 
+      opacity: 0, 
+      x: 100,
+      scale: 0.8 
+    },
+    animate: { 
+      opacity: 1, 
+      x: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0,
+      x: 100,
+      scale: 0.8,
+      transition: {
+        duration: 0.3,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  const iconVariants = {
+    initial: { scale: 0 },
+    animate: { 
+      scale: 1,
+      transition: {
+        delay: 0.2,
+        type: "spring",
+        stiffness: 200,
+        damping: 10
+      }
+    }
+  };
+
+  const handleWhatsAppClick = () => {
+    window.location.href = 'https://wa.me/254719408098';
   };
 
   return (
@@ -282,7 +335,7 @@ const Contact = () => {
               whileTap={{ scale: 0.95 }}
             >
               <h3>Email</h3>
-              <p>hello@beyondgravity.com</p>
+              <p>gravitydevs.tech@gmail.com</p>
             </InfoCard>
             
             <InfoCard
@@ -317,55 +370,76 @@ const Contact = () => {
           </ContactInfo>
 
           <ContactForm
+            ref={formRef}
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             onSubmit={handleSubmit}
           >
             <FormGroup variants={itemVariants}>
-              <Label>Name</Label>
+              <Label htmlFor="name">Name</Label>
               <Input
+                id="name"
                 type="text"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
                 required
                 whileFocus={{ scale: 1.02 }}
+              />
+              <ValidationError 
+                prefix="Name" 
+                field="name"
+                errors={state.errors}
+                component={ErrorText}
               />
             </FormGroup>
 
             <FormGroup variants={itemVariants}>
-              <Label>Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
+                id="email"
                 type="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
                 required
                 whileFocus={{ scale: 1.02 }}
+              />
+              <ValidationError 
+                prefix="Email" 
+                field="email"
+                errors={state.errors}
+                component={ErrorText}
               />
             </FormGroup>
 
             <FormGroup variants={itemVariants}>
-              <Label>Subject</Label>
+              <Label htmlFor="subject">Subject</Label>
               <Input
+                id="subject"
                 type="text"
                 name="subject"
-                value={formData.subject}
-                onChange={handleChange}
                 required
                 whileFocus={{ scale: 1.02 }}
+              />
+              <ValidationError 
+                prefix="Subject" 
+                field="subject"
+                errors={state.errors}
+                component={ErrorText}
               />
             </FormGroup>
 
             <FormGroup variants={itemVariants}>
-              <Label>Message</Label>
+              <Label htmlFor="message">Message</Label>
               <TextArea
+                id="message"
                 name="message"
-                value={formData.message}
-                onChange={handleChange}
                 required
                 whileFocus={{ scale: 1.02 }}
+              />
+              <ValidationError 
+                prefix="Message" 
+                field="message"
+                errors={state.errors}
+                component={ErrorText}
               />
             </FormGroup>
 
@@ -374,20 +448,29 @@ const Contact = () => {
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              disabled={state.submitting}
             >
-              Send Message
+              {state.submitting ? 'Sending...' : 'Send Message'}
             </SubmitButton>
           </ContactForm>
         </ContactGrid>
       </Container>
 
       <AnimatePresence>
-        {showSuccess && (
+        {state.succeeded && (
           <SuccessMessage
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
+            variants={successVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
           >
+            <SuccessIcon
+              variants={iconVariants}
+              initial="initial"
+              animate="animate"
+            >
+              <CheckCircle size={24} />
+            </SuccessIcon>
             Message sent successfully!
           </SuccessMessage>
         )}

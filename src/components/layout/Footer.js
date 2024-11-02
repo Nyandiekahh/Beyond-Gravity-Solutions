@@ -1,7 +1,8 @@
-// components/layout/Footer.js
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useForm, ValidationError } from '@formspree/react';
+import { CheckCircle, Send } from 'lucide-react';
 
 const FooterContainer = styled.footer`
   background: linear-gradient(
@@ -70,6 +71,7 @@ const NewsletterForm = styled(motion.form)`
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+  position: relative;
 `;
 
 const NewsletterInput = styled(motion.input)`
@@ -84,6 +86,11 @@ const NewsletterInput = styled(motion.input)`
     outline: none;
     border-color: var(--secondary-color);
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `;
 
 const SubscribeButton = styled(motion.button)`
@@ -94,6 +101,14 @@ const SubscribeButton = styled(motion.button)`
   color: var(--background-dark);
   cursor: pointer;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `;
 
 const Copyright = styled(motion.div)`
@@ -134,22 +149,74 @@ const SuccessMessage = styled(motion.div)`
   right: 2rem;
   background: var(--secondary-color);
   color: var(--background-dark);
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
   border-radius: 10px;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 255, 157, 0.2);
+  max-width: 400px;
+`;
+
+const SuccessHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+`;
+
+const SuccessDetails = styled.p`
+  font-size: 0.9rem;
+  opacity: 0.9;
+  line-height: 1.4;
+`;
+
+const ErrorMessage = styled(motion.span)`
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
 `;
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
+  const formRef = useRef(null);
+  const [state, handleSubmit] = useForm("xkgnjqqq", {
+    data: {
+      subject: "Welcome to Beyond Gravity Solutions Newsletter! 🚀",
+      replyTo: "@",
+      message: `Thank you for subscribing to our newsletter! 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle newsletter subscription
-    setShowSuccess(true);
-    setEmail('');
-    setTimeout(() => setShowSuccess(false), 3000);
-  };
+We're excited to have you join our community. You'll be among the first to receive:
+
+• Updates on our latest projects and innovations
+• Industry insights and tech trends
+• Exclusive content and early access to our releases
+
+Stay tuned for our next update!
+
+Best regards,
+The Beyond Gravity Solutions Team
+
+P.S. If you have any questions, feel free to reply to this email.`,
+      company: "Beyond Gravity Solutions",
+      subscriptionSource: "Website Footer Newsletter",
+    }
+  });
+
+  useEffect(() => {
+    if (state.succeeded) {
+      formRef.current?.reset();
+      const timer = setTimeout(() => {
+        // Optional: Reset form state after success message disappears
+        // state.reset();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [state.succeeded]);
 
   const footerVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -169,6 +236,32 @@ const Footer = () => {
       opacity: 1,
       y: 0,
       transition: { duration: 0.6 }
+    }
+  };
+
+  const successVariants = {
+    initial: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.8 
+    },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0,
+      y: 50,
+      scale: 0.8,
+      transition: {
+        duration: 0.3,
+        ease: "easeIn"
+      }
     }
   };
 
@@ -219,21 +312,11 @@ const Footer = () => {
           <motion.div variants={itemVariants}>
             <FooterTitle>Quick Links</FooterTitle>
             <FooterList>
-              <li>
-                <FooterLink href="/about">About Us</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="/services">Services</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="/projects">Projects</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="/careers">Careers</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="/contact">Contact</FooterLink>
-              </li>
+              <li><FooterLink href="/about">About Us</FooterLink></li>
+              <li><FooterLink href="/services">Services</FooterLink></li>
+              <li><FooterLink href="/projects">Projects</FooterLink></li>
+              <li><FooterLink href="/careers">Careers</FooterLink></li>
+              <li><FooterLink href="/contact">Contact</FooterLink></li>
             </FooterList>
           </motion.div>
         </FooterSection>
@@ -248,8 +331,8 @@ const Footer = () => {
             <FooterTitle>Contact Info</FooterTitle>
             <FooterList>
               <li>Juja, Kenya</li>
-              <li>Phone: +254 XXX XXX XXX</li>
-              <li>Email: hello@beyondgravity.com</li>
+              <li>Phone: +254 719 408 098</li>
+              <li>Email: gravitydevs.tech@gmail.com</li>
             </FooterList>
           </motion.div>
         </FooterSection>
@@ -263,21 +346,33 @@ const Footer = () => {
           <motion.div variants={itemVariants}>
             <FooterTitle>Newsletter</FooterTitle>
             <p>Subscribe to our newsletter for updates and insights.</p>
-            <NewsletterForm onSubmit={handleSubmit}>
+            <NewsletterForm ref={formRef} onSubmit={handleSubmit}>
               <NewsletterInput
                 type="email"
+                name="email"
                 placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 required
                 whileFocus={{ scale: 1.02 }}
+                disabled={state.submitting}
+              />
+              <ValidationError 
+                prefix="Email" 
+                field="email"
+                errors={state.errors}
+                component={ErrorMessage}
               />
               <SubscribeButton
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={state.submitting}
               >
-                Subscribe
+                {state.submitting ? 'Subscribing...' : (
+                  <>
+                    <Send size={18} />
+                    Subscribe
+                  </>
+                )}
               </SubscribeButton>
             </NewsletterForm>
           </motion.div>
@@ -293,13 +388,21 @@ const Footer = () => {
       </Copyright>
 
       <AnimatePresence>
-        {showSuccess && (
+        {state.succeeded && (
           <SuccessMessage
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
+            variants={successVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
           >
-            Successfully subscribed to newsletter!
+            <SuccessHeader>
+              <CheckCircle size={24} />
+              Successfully Subscribed!
+            </SuccessHeader>
+            <SuccessDetails>
+              Thank you for joining our newsletter! Please check your email 
+              for a welcome message with more details about what to expect.
+            </SuccessDetails>
           </SuccessMessage>
         )}
       </AnimatePresence>

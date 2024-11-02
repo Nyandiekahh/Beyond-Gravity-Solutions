@@ -1,6 +1,7 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { FormspreeProvider } from '@formspree/react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Preloader from './components/layout/Preloader';
@@ -20,19 +21,21 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      {loading ? (
-        <Preloader />
-      ) : (
-        <div className="app">
-          <Navbar />
-          <main>
-            <AppRoutes />
-          </main>
-          <Footer />
-        </div>
-      )}
-    </BrowserRouter>
+    <FormspreeProvider>
+      <BrowserRouter>
+        {loading ? (
+          <Preloader />
+        ) : (
+          <div className="app">
+            <Navbar />
+            <main>
+              <AppRoutes />
+            </main>
+            <Footer />
+          </div>
+        )}
+      </BrowserRouter>
+    </FormspreeProvider>
   );
 };
 
