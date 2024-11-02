@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { MessageCircle } from 'lucide-react';
 
 const ContactSection = styled.section`
   min-height: 100vh;
@@ -147,6 +148,41 @@ const InfoCard = styled(motion.div)`
   p {
     color: rgba(255, 255, 255, 0.8);
   }
+
+  &.whatsapp-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(37, 211, 102, 0.15);
+      border-color: rgba(37, 211, 102, 0.3);
+    }
+  }
+`;
+
+const WhatsAppButton = styled(motion.a)`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #25D366;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #128C7E;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const SuccessMessage = styled(motion.div)`
@@ -185,6 +221,10 @@ const Contact = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleWhatsAppClick = () => {
+    window.location.href = 'https://wa.me/254719408098';
   };
 
   const containerVariants = {
@@ -251,7 +291,28 @@ const Contact = () => {
               whileTap={{ scale: 0.95 }}
             >
               <h3>Phone</h3>
-              <p>+254 XXX XXX XXX</p>
+              <p>+254 719 408 089</p>
+            </InfoCard>
+
+            <InfoCard
+              className="whatsapp-card"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleWhatsAppClick}
+            >
+              <div>
+                <h3>WhatsApp</h3>
+                <p>Chat with us directly</p>
+              </div>
+              <WhatsAppButton
+                href="https://wa.me/254719408098"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle />
+                Chat Now
+              </WhatsAppButton>
             </InfoCard>
           </ContactInfo>
 
