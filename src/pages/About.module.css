@@ -1,0 +1,211 @@
+.aboutSection {
+    min-height: 100vh;
+    padding: 8rem 2rem;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+  }
+  
+  .glowingOrb {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #4a00e0, transparent 70%);
+    filter: blur(60px);
+    opacity: 0.3;
+  }
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .mainTitle {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    background: linear-gradient(45deg, #fff, #4a00e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    letter-spacing: -1px;
+  }
+  
+  .visionSection {
+    margin-bottom: 6rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .sectionTitle {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #4a00e0;
+    position: relative;
+  }
+  
+  .sectionTitle::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #4a00e0, transparent);
+  }
+  
+  .text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .timelineContainer {
+    margin: 4rem 0;
+    position: relative;
+  }
+  
+  .timelineContainer::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #4a00e0, transparent);
+  }
+  
+  .timelineItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  
+  .timelineItem:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  .timelineItem:nth-child(even) .timelineContent {
+    text-align: right;
+  }
+  
+  .timelineContent {
+    width: 45%;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .timelineContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #4a00e0;
+  }
+  
+  .timelineDot {
+    width: 20px;
+    height: 20px;
+    background: #4a00e0;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .timelineDot::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #4a00e0;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+  
+  .statCard {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .statCard h3 {
+    font-size: 3rem;
+    color: #4a00e0;
+    margin-bottom: 1rem;
+  }
+  
+  .statCard p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+  }
+  
+  .futureSection {
+    margin-top: 4rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .statsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .mainTitle {
+      font-size: 3.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .statsGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .timelineContainer::before {
+      left: 0;
+    }
+    
+    .timelineItem {
+      flex-direction: column;
+      padding-left: 2rem;
+    }
+    
+    .timelineItem:nth-child(even) {
+      flex-direction: column;
+    }
+    
+    .timelineContent {
+      width: 100%;
+    }
+    
+    .timelineDot {
+      position: absolute;
+      left: 0;
+    }
+    
+    .mainTitle {
+      font-size: 2.5rem;
+    }
+    
+    .text {
+      font-size: 1rem;
+    }
+  }
