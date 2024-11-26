@@ -15,7 +15,7 @@ const App = () => {
     // Simulate loading time or wait for essential resources
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 5000); // Adjust time as needed
+    }, 2500); // Adjust time as needed
 
     return () => clearTimeout(timer);
   }, []);

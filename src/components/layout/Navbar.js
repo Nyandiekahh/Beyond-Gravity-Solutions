@@ -1,4 +1,3 @@
-// components/layout/Navbar.js
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -59,6 +58,16 @@ const NavLinks = styled(motion.div)`
   }
 `;
 
+const NewFeatureBadge = styled(motion.span)`
+  background: var(--secondary-color);
+  color: var(--text-dark);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+`;
+
 const NavLink = styled(motion(Link))`
   color: var(--text-light);
   text-decoration: none;
@@ -67,6 +76,9 @@ const NavLink = styled(motion(Link))`
   padding: 0.5rem 1rem;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 
   &::before {
     content: '';
@@ -182,6 +194,7 @@ const Navbar = () => {
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About' },
     { path: '/projects', label: 'Projects' },
+    { path: '/edutask', label: 'Edutask', isNew: true },
     { path: '/services', label: 'Services' },
     { path: '/careers', label: 'Careers' },
     { path: '/contact', label: 'Contact' }
@@ -226,6 +239,15 @@ const Navbar = () => {
               whileTap={{ scale: 0.95 }}
             >
               {link.label}
+              {link.isNew && (
+                <NewFeatureBadge
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  whileHover={{ scale: 1.1 }}
+                >
+                  New
+                </NewFeatureBadge>
+              )}
             </NavLink>
           ))}
         </NavLinks>
@@ -258,6 +280,15 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   {link.label}
+                  {link.isNew && (
+                    <NewFeatureBadge
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      New
+                    </NewFeatureBadge>
+                  )}
                 </NavLink>
               ))}
             </MobileMenu>
