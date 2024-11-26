@@ -419,7 +419,7 @@ const benefits = [
 const pricingPlans = [
   {
     name: 'Basic',
-    price: 'From $50',
+    price: 'From KSH 500',
     features: [
       'Simple Assignments',
       'Basic Research',
@@ -429,7 +429,7 @@ const pricingPlans = [
   },
   {
     name: 'Professional',
-    price: 'From $100',
+    price: 'From KSH 1,000',
     popular: true,
     features: [
       'Complex Projects',
