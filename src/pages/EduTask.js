@@ -712,28 +712,39 @@ const EduTask = () => {
         </FAQSection>
 
         {/* Final CTA Section */}
-        <CTASection
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
-          <ServiceTitle gradient="linear-gradient(to right, #00ffc8, #00a2ff)">
-            Ready to Excel in Your Academic Journey?
-          </ServiceTitle>
-          <Subtitle>
-            Contact us now and let's transform your academic challenges into success stories.
-            Experience the power of Beyond Gravity Solutions and Edu Task Masters working together for your success.
-          </Subtitle>
-          <CTAButton 
-            href="https://wa.link/gdzu66"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Contact Us on WhatsApp
-          </CTAButton>
-        </CTASection>
+        {/* Final CTA Section */}
+<CTASection
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.6 }}
+>
+  <ServiceTitle gradient="linear-gradient(to right, #00ffc8, #00a2ff)">
+    Ready to Excel in Your Academic Journey?
+  </ServiceTitle>
+  <Subtitle>
+    Contact us now and let's transform your academic challenges into success stories.
+    Experience the power of Beyond Gravity Solutions and Edu Task Masters working together for your success.
+  </Subtitle>
+  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+    <CTAButton 
+      href="https://wa.link/gdzu66"
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Contact Us on WhatsApp
+    </CTAButton>
+    
+    <CTAButton 
+      href="/edutask/portal"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Sign In / Register
+    </CTAButton>
+  </div>
+</CTASection>
       </Container>
     </EduTaskSection>
   );
