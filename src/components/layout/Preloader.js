@@ -98,7 +98,7 @@ const Preloader = () => {
         <LogoShape />
         <LogoShape />
         <LogoShape />
-        <CompanyName>BEYOND GRAVITY</CompanyName>
+        <CompanyName>BOLD AND BRILLIANT</CompanyName>
       </LogoContainer>
     </PreloaderContainer>
   );
