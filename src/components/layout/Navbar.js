@@ -222,7 +222,7 @@ const Navbar = () => {
       <NavContent>
         <Logo whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <div className="logo-icon">BGS</div>
-          <span>Bold and Brilliant</span>
+          <span>Beyond Gravity Solutions</span>
         </Logo>
 
         <NavLinks>
