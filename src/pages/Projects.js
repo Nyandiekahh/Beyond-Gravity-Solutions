@@ -3,6 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { ExternalLink } from 'lucide-react';
 
 // Keeping your existing styled components exactly as they are
 const ProjectsSection = styled.section`
@@ -109,7 +110,9 @@ const ProjectCard = styled(motion.div)`
 const ProjectImage = styled.div`
   width: 100%;
   height: 200px;
-  background: ${props => props.gradient};
+  background-image: ${props => props.imageUrl ? `url(${props.imageUrl})` : props.gradient};
+  background-size: cover;
+  background-position: center;
   position: relative;
   overflow: hidden;
   
@@ -129,6 +132,22 @@ const ProjectTitle = styled.h3`
   font-size: 1.5rem;
   color: #fff;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`;
+
+const LiveLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  color: #00ffc8;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.8;
+  }
 `;
 
 const ProjectDescription = styled.p`
@@ -141,6 +160,7 @@ const TechStack = styled.div`
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-bottom: 1.5rem;
 `;
 
 const TechTag = styled(motion.span)`
@@ -151,75 +171,83 @@ const TechTag = styled(motion.span)`
   color: #00ffc8;
 `;
 
-// Updated projects array with your real projects
+// Changed from motion.a to a regular styled anchor link
+const ViewProjectButton = styled.a`
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #00ffc8, #00a2ff);
+  border: none;
+  border-radius: 50px;
+  color: #0a0a0f;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 162, 255, 0.2);
+  }
+`;
+
+// Updated projects array with only the ones you want to keep
 const projects = [
-  {
-    id: 1,
-    title: 'P2P Lending Platform',
-    description: 'A sophisticated peer-to-peer lending platform enabling secure financial transactions between lenders and borrowers. Features include loan management, automated matching, and secure payment processing.',
-    gradient: 'linear-gradient(135deg, #00ffc8 0%, #00a2ff 100%)',
-    category: 'FinTech',
-    techStack: ['React', 'Node.js', 'MongoDB', 'Express']
-  },
   {
     id: 2,
     title: 'SACCO Management System',
     description: 'Comprehensive SACCO management solution with features for member management, loan processing, savings tracking, and dividend calculations.',
     gradient: 'linear-gradient(135deg, #7000ff 0%, #c800ff 100%)',
+    imageUrl: '/assets/images/projects/sacco-screenshot.jpg',
     category: 'FinTech',
-    techStack: ['React', 'MySQL', 'Node.js', 'Redux']
-  },
-  {
-    id: 3,
-    title: 'Hospital Management System',
-    description: 'Integrated healthcare management system for patient records, appointments, inventory, and hospital operations management.',
-    gradient: 'linear-gradient(135deg, #ff0099 0%, #ff4d4d 100%)',
-    category: 'Healthcare',
-    techStack: ['Vue.js', 'Laravel', 'MySQL', 'Redis']
+    techStack: ['React', 'MySQL', 'Node.js', 'Redux'],
+    liveLink: 'https://www.kmssacco.co.ke/dashboard'
   },
   {
     id: 4,
     title: 'Task & CRM System',
     description: 'Combined task management and CRM platform with real-time updates, team collaboration, and customer tracking features.',
     gradient: 'linear-gradient(135deg, #00a2ff 0%, #0066ff 100%)',
+    imageUrl: '',
     category: 'Business',
-    techStack: ['React', 'Node.js', 'MongoDB', 'Socket.io']
-  },
-  {
-    id: 5,
-    title: 'POS System Landing',
-    description: 'High-conversion landing page for Point of Sale system with interactive demos and feature highlights.',
-    gradient: 'linear-gradient(135deg, #ff6b00 0%, #ff4d4d 100%)',
-    category: 'Web',
-    techStack: ['React', 'Tailwind CSS', 'Framer Motion']
+    techStack: ['React', 'Node.js', 'MongoDB', 'Socket.io'],
+    liveLink: 'https://project-management-using-crm.vercel.app/'
   },
   {
     id: 6,
     title: 'Agrovet E-commerce',
     description: 'Full-featured e-commerce platform for agricultural and veterinary products with inventory and order management.',
     gradient: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
+    imageUrl: '',
     category: 'E-commerce',
-    techStack: ['Next.js', 'Node.js', 'MongoDB', 'Stripe']
+    techStack: ['Next.js', 'Node.js', 'MongoDB', 'Stripe'],
+    liveLink: 'https://vet-ken.vercel.app/'
   },
   {
     id: 7,
     title: 'M-Pesa Integration',
     description: 'Seamless payment solution integrating M-Pesa services for various business applications and platforms.',
     gradient: 'linear-gradient(135deg, #00ff87 0%, #60efff 100%)',
+    imageUrl: '',
     category: 'FinTech',
-    techStack: ['Node.js', 'Express', 'M-Pesa API', 'MongoDB']
+    techStack: ['Node.js', 'Express', 'M-Pesa API', 'MongoDB'],
+    liveLink: ''
   },
   {
     id: 8,
     title: 'Portfolio Websites',
     description: 'Collection of modern, responsive portfolio websites with interactive elements and smooth animations.',
     gradient: 'linear-gradient(135deg, #aa00ff 0%, #00ff22 100%)',
+    imageUrl: '',
     category: 'Web',
-    techStack: ['React', 'Three.js', 'GSAP', 'Tailwind']
+    techStack: ['React', 'Three.js', 'GSAP', 'Tailwind'],
+    liveLink: 'https://nyandieka-portfolio.vercel.app/'
   }
 ];
 
-const categories = ['All', 'FinTech', 'Healthcare', 'Business', 'Web', 'E-commerce'];
+const categories = ['All', 'FinTech', 'Business', 'Web', 'E-commerce'];
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = React.useState('All');
@@ -330,9 +358,19 @@ const Projects = () => {
               }}
               onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
             >
-              <ProjectImage gradient={project.gradient} />
+              <ProjectImage 
+                gradient={project.gradient} 
+                imageUrl={project.imageUrl}
+              />
               <ProjectContent>
-                <ProjectTitle>{project.title}</ProjectTitle>
+                <ProjectTitle>
+                  {project.title}
+                  {project.liveLink && (
+                    <LiveLink href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink size={18} />
+                    </LiveLink>
+                  )}
+                </ProjectTitle>
                 <ProjectDescription>{project.description}</ProjectDescription>
                 <TechStack>
                   {project.techStack.map((tech, index) => (
@@ -346,6 +384,17 @@ const Projects = () => {
                     </TechTag>
                   ))}
                 </TechStack>
+                {project.liveLink && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ViewProjectButton 
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Project
+                    </ViewProjectButton>
+                  </div>
+                )}
               </ProjectContent>
             </ProjectCard>
           ))}
