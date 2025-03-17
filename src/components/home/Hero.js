@@ -275,7 +275,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            At BOLD AND BRILLIANT, we're not just developers – we're digital
+            At BEYOND GRAVITY SOLUTIONS, we're not just developers – we're digital
             innovators pushing the boundaries of what's possible. Our team of
             passionate technologists combines cutting-edge expertise with creative
             vision to deliver solutions that transcend expectations.
